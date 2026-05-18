@@ -17,4 +17,11 @@ Se agrega un archivo `formato.js` en el root del proyecto.
 - `formatearPrecio(43500)` → `"$43.500"`
 - `formatearPrecio(0)` → `"$0"`
 
+Evidencia del resultado (se pueden ver los montos formateados)
+
+<img width="1889" height="628" alt="image" src="https://github.com/user-attachments/assets/95da54f4-6898-4c77-a941-f2284a8019af" />
+
+<img width="1915" height="352" alt="image" src="https://github.com/user-attachments/assets/1bc07ac2-4a32-45a6-b783-70cd526db1cb" />
+
+
 Se incluye desde ambas vistas mediante `<script src="...formato.js"></script>` antes de su JS principal, por lo que la función queda disponible globalmente
