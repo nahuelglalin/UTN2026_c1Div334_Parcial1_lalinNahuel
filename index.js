@@ -1,25 +1,92 @@
 //--- Funcion que obtiene el carrito del LocalStorage, lo parsea a un array y lo retorna ---//
 function obtenerCarrito() 
 {
-    return;
+    const carritoString = localStorage.getItem("carrito");
+    if (carritoString === null) {
+        return [];
+    }
+    return JSON.parse(carritoString);
 }
 
 //--- Funcion que guarda el carrito recibido al LocalStorage, previamente transformado a string ---//
 function guardarCarrito(carrito) 
 {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
 
+// Función para obtener el nombre y precio del producto desde el event.target 
+function obtenerProductoDesdeEvento(e)
+{
+    const card = e.target.parentElement;
+    const nombre = card.querySelector(".nombre-producto").textContent;
+    const precio = parseInt(card.querySelector(".precio-producto").textContent.replace("$", ""), 10);
+    return { nombre, precio };
 }
 
 function sumarAlCarrito(e) 
 {
-    //--- Obtengo la referencia al elemento clickeado desde en base al evento (Propiedad exclusivamente de todos los Events) ---//
-    let elementoClickeado = e.target;
+    // Obtengo el nombre y precio del producto desde la card en la que esta el boton clickeado
+    const productoClickeado = obtenerProductoDesdeEvento(e);
+
+    // Obtengo el carrito del LocalStorage
+    const carrito = obtenerCarrito();
+
+    // Busco si el producto ya existia en el carrito
+    const productoExistente = carrito.find(producto => producto.nombre === productoClickeado.nombre);
+
+    if (productoExistente === undefined) {
+        // Si no existe, lo agrego con cantidad una cantidad de 1
+        carrito.push({ nombre: productoClickeado.nombre, precio: productoClickeado.precio, cantidad: 1 });
+    } else {
+        // Si existe, incremento la prop cantidad
+        productoExistente.cantidad = productoExistente.cantidad + 1;
+    }
+
+    // Imprimo en consola como quedo el carrito previo a subirlo al LocalStorage
+    console.log(carrito);
+
+    guardarCarrito(carrito);
+
+    // Muestro alert indicando que el producto fue agregado al carrito
+    alert(`Un/una: ${productoClickeado.nombre} fue agregado al carrito`);
 }
 
-function restarDelCarrito(e) 
+function restarDelCarrito(e)
 {
-    //--- Obtengo la referencia al elemento clickeado desde en base al evento (Propiedad exclusivamente de todos los Events) ---//
-    let elementoClickeado = e.target;
+    // Obtengo el nombre del producto desde la card en la que esta el boton clickeado
+    const productoClickeado = obtenerProductoDesdeEvento(e);
+
+    // Obtengo el carrito del LocalStorage
+    const carrito = obtenerCarrito();
+
+    // Si el carrito esta totalmente vacio, solo muestro el alert y termino la función
+    if (carrito.length === 0) {
+        alert("No hay ningún producto guardado en el carrito");
+        return;
+    }
+
+    // Busco si el producto ya existia en el carrito
+    const productoExistente = carrito.find(producto => producto.nombre === productoClickeado.nombre);
+
+    if (productoExistente === undefined) {
+        // Si el producto no existia previamente, solo muestro el alert
+        alert(`No hay más ${productoClickeado.nombre} en el carrito`);
+        return;
+    }
+
+    // Si existia, decremento la prop cantidad en 1
+    productoExistente.cantidad = productoExistente.cantidad - 1;
+
+    // Si la cantidad llego a 0, lo saco del array para que no quede almacenado
+    if (productoExistente.cantidad === 0) {
+        const indice = carrito.indexOf(productoExistente);
+        carrito.splice(indice, 1);
+    }
+
+    guardarCarrito(carrito);
+
+    // Muestro alert indicando que el producto fue eliminado/decrementado del carrito
+    alert(`Un/una: ${productoClickeado.nombre} fue eliminado del carrito`);
 }
 
 //--- [EVENTOS] Asociacion del evento "click" a los botones "+" y "-" con la funcion manejadora del evento ---//
