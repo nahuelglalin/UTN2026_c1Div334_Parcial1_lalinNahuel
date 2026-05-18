@@ -7,7 +7,7 @@ Se agregaron mejoras visuales en `index.css`:
 - **Hover en las cards de producto**: al pasar el cursor por encima, la card se agranda, con una transition suave.
 - **Feedback al click en los botones `+` y `-`**: al estar presionados (`:active`) se oscurecen.
 
-## ## Mejoras en cómo se muestran los montos en las vistas `formato.js`
+## Mejoras en cómo se muestran los montos en las vistas `formato.js`
 
 Se agrega un archivo `formato.js` en el root del proyecto.
 
