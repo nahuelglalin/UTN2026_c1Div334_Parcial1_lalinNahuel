@@ -33,7 +33,7 @@ function cargarProductosCarrito()
         celdaCantidad.textContent = producto.cantidad;
 
         const celdaPrecio = document.createElement("td");
-        celdaPrecio.textContent = `$${producto.precio}`;
+        celdaPrecio.textContent = formatearPrecio(producto.precio);
 
         fila.appendChild(celdaNombre);
         fila.appendChild(celdaCantidad);
@@ -44,7 +44,7 @@ function cargarProductosCarrito()
 
     // Una vez recorrido todo el carrito, actualizo el h2 con el monto total a pagar
     const valorFinal = document.getElementById("valor-final");
-    valorFinal.textContent = `El valor final a pagar es de: $${total}`;
+    valorFinal.textContent = `El valor final a pagar es de: ${formatearPrecio(total)}`;
 }
 
 function limpiarCarrito()
@@ -58,7 +58,7 @@ function limpiarCarrito()
 
     // Reseteo el monto total a pagar a $0 ya que el carrito quedo vacio
     const valorFinal = document.getElementById("valor-final");
-    valorFinal.textContent = "El valor final a pagar es de: $0";
+    valorFinal.textContent = `El valor final a pagar es de: ${formatearPrecio(0)}`;
 
     // Muestro el alert indicando que el carrito fue limpiado correctamente
     alert("Carrito limpiado correctamente");

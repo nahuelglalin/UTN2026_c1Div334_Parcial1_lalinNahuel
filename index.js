@@ -19,7 +19,11 @@ function obtenerProductoDesdeEvento(e)
 {
     const card = e.target.parentElement;
     const nombre = card.querySelector(".nombre-producto").textContent;
-    const precio = parseInt(card.querySelector(".precio-producto").textContent.replace("$", ""), 10);
+
+    // Limpio el simbolo "$" y los puntos de miles que agrega el formato argentino antes de parsear
+    const precioTexto = card.querySelector(".precio-producto").textContent.replace("$", "").replace(/\./g, "");
+    const precio = parseInt(precioTexto, 10);
+
     return { nombre, precio };
 }
 
@@ -97,4 +101,10 @@ window.addEventListener("DOMContentLoaded", () =>
 
     botonesSumar.forEach(btn => btn.addEventListener("click", sumarAlCarrito));
     botonesRestar.forEach(btn => btn.addEventListener("click", restarDelCarrito));
+
+    // Reformateo cada precio del catalogo al formato argentino (ej: "$12000" -> "$12.000")
+    document.querySelectorAll(".precio-producto").forEach(elem => {
+        const precio = parseInt(elem.textContent.replace("$", ""), 10);
+        elem.textContent = formatearPrecio(precio);
+    });
 });

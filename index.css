@@ -89,6 +89,14 @@ a:hover {
     padding: 15px;
     margin: 15px;
     border-radius: 16px;
+    transition: transform 0.3s ease;
+}
+
+/* Se agrega un estilo hover de CSS para agrandar las cards */
+.li-hamburguesa:hover,
+.li-bebida:hover,
+.li-tragos:hover {
+    transform: scale(1.05);
 }
 
 .img-producto {
@@ -125,6 +133,7 @@ a:hover {
     width: 25px;
     color: white;
     cursor: pointer;
+    transition: filter 0.1s ease;
 }
 
 .btn-restar-a-carrito {
@@ -136,6 +145,13 @@ a:hover {
     width: 25px;
     color: white;
     cursor: pointer;
+    transition: filter 0.1s ease;
+}
+
+/* Se agregan estilos al hacer click en los botones de las cards */
+.btn-sumar-a-carrito:active,
+.btn-restar-a-carrito:active {
+    filter: brightness(0.75);
 }
 
 footer {
